@@ -36,23 +36,8 @@ public class Apartment {
 		return devices.length;
 	}
 
-	public void switchToType(Device device) {
-		int index = 0;
-		switch (index) {
-		case 1:
-			device.getWeight();
-			break;
-		case 2:
-			device.getPrice();
-			break;
-		case 3:
-			device.getPowerConsumption();
-			break;
-
-		default:
-			device.toString();
-			break;
-		}
+	public double getPrice(Device device) {
+		return device.getPrice();
 	}
 
 	public void add(Device device) {

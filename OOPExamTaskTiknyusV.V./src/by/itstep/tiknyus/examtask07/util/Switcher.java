@@ -9,7 +9,7 @@ import by.itstep.tiknyus.examtask07.model.logic.Sorter;
 import by.itstep.tiknyus.examtask07.view.Printer;
 import by.itstep.tiknyus.examtask07.model.entity.abstracts.Device;
 
-public class Switcher {
+public class Switcher implements Data {
 
 	private static Scanner scanner;
 
@@ -20,19 +20,20 @@ public class Switcher {
 	public static int index;
 	public static int count;
 
-	public static void exitProgramm() {
+	static void exitProgramm() {
 		System.exit(0);
 	}
 
 	public static void switcher(Apartment apartment) {
+		Printer.print(Data.FIRST_INITIALIZATION);
 		index = scanner.nextInt();
 		switch (index) {
 		case Data.CREATE_DEVICES:
-			Printer.print("Your number: ");
+			Printer.print("\nYour number: ");
 			count = scanner.nextInt();
 			if (count <= 0) {
 				Printer.print(Data.ERROR_MESSAGE);
-				exitProgramm();
+				switcher(apartment);
 			} else
 				apartment = DeviceCreator.create(count);
 			Printer.print(apartment);
@@ -42,14 +43,13 @@ public class Switcher {
 			exitProgramm();
 		default:
 			Printer.print(Data.ERROR_MESSAGE);
-			exitProgramm();
+			switcher(apartment);
 			break;
 		}
 	}
 
 	public static void switcherNextStep(Apartment apartment) {
-		Printer.print("\nSelect your next action:" + "\n 1. Use calculator" + "\n 2. Use searcher" + "\n 3. Use sorter"
-				+ "\n 4. Exit programm\n");
+		Printer.print(Data.SECOND_INITIALIZATION);
 		index = scanner.nextInt();
 		switch (index) {
 		case Data.CALCULATE_DEVICES:
@@ -61,19 +61,29 @@ public class Switcher {
 		case Data.SORT_DEVICES:
 			switcherSorterAscDesc(apartment);
 			break;
-		case Data.EXIT_PROGRAMM_STEP_TWO:
+		case Data.QUIT_PROGRAMM:
 			exitProgramm();
+			break;
+		case Data.BACKWARD:
+			Printer.print("Your number: ");
+			count = scanner.nextInt();
+			if (count <= 0) {
+				Printer.print(Data.ERROR_MESSAGE);
+				switcherNextStep(apartment);
+			} else
+				apartment = DeviceCreator.create(count);
+			Printer.print(apartment);
+			switcherNextStep(apartment);
 			break;
 		default:
 			Printer.print(Data.ERROR_MESSAGE);
-			exitProgramm();
+			switcherNextStep(apartment);
 			break;
 		}
 	}
 
 	public static void switcherCalculator(Apartment apartment) {
-		Printer.print(
-				"\n\nSelect value: " + "\n1. Total power" + "\n2. Plugged in " + "\n3. Summary values" + "\n4. Back\n");
+		Printer.print(Data.CALCULATOR_INITIALIZATION);
 		index = scanner.nextInt();
 		switch (index) {
 		case Data.TOTAL_POWER:
@@ -98,14 +108,14 @@ public class Switcher {
 			break;
 		default:
 			Printer.print(Data.ERROR_MESSAGE);
-			exitProgramm();
+			switcherCalculator(apartment);
 			break;
 		}
 
 	}
 
 	public static void switcherSearcherMaxMin(Apartment apartment) {
-		Printer.print("\nSelect type: " + "\n1. Max. value" + "\n2. Min. value ");
+		Printer.print(Data.SEARCHER_TYPE_INITIALIZATION);
 		index = scanner.nextInt();
 		switch (index) {
 		case Data.MAX:
@@ -116,14 +126,14 @@ public class Switcher {
 			break;
 		default:
 			Printer.print(Data.ERROR_MESSAGE);
-			exitProgramm();
+			switcherSearcherMaxMin(apartment);
 			break;
 		}
 
 	}
 
 	public static void switcherSearcherMax(Apartment apartment) {
-		Printer.print("\nSelect value: " + "\n1. Price" + "\n2. Weight" + "\n3. Power consumption" + "\n4. Back\n");
+		Printer.print(Data.SEARCHER_INITIALIZATION);
 		index = scanner.nextInt();
 		switch (index) {
 		case Data.PRICE:
@@ -149,14 +159,14 @@ public class Switcher {
 			break;
 		default:
 			Printer.print(Data.ERROR_MESSAGE);
-			exitProgramm();
+			switcherSearcherMax(apartment);
 			break;
 		}
 
 	}
 
 	public static void switcherSearcherMin(Apartment apartment) {
-		Printer.print("\nSelect value: " + "\n1. Price" + "\n2. Weight" + "\n3. Power consumption" + "\n4. Back\n");
+		Printer.print(Data.SEARCHER_INITIALIZATION);
 		index = scanner.nextInt();
 		switch (index) {
 		case Data.PRICE:
@@ -182,14 +192,14 @@ public class Switcher {
 			break;
 		default:
 			Printer.print(Data.ERROR_MESSAGE);
-			exitProgramm();
+			switcherSearcherMin(apartment);
 			break;
 		}
 
 	}
 
 	public static void switcherSorterAscDesc(Apartment apartment) {
-		Printer.print("\nSelect sort type: " + "\n1. Ascending" + "\n2. Descending \n");
+		Printer.print(Data.SORTER_TYPE_INITIALIZATION);
 		index = scanner.nextInt();
 		switch (index) {
 		case Data.MAX:
@@ -200,15 +210,14 @@ public class Switcher {
 			break;
 		default:
 			Printer.print(Data.ERROR_MESSAGE);
-			exitProgramm();
+			switcherSorterAscDesc(apartment);
 			break;
 		}
 
 	}
 
 	public static void switcherSorterAsc(Apartment apartment) {
-		Printer.print("\nSelect value (type - ascending) : " + "\n1. Price" + "\n2. Weight" + "\n3. Power consumption"
-				+ "\n4. Device name\n" + "\n5. Back\n");
+		Printer.print(Data.SORTER_INITIALIZATION);
 		index = scanner.nextInt();
 		switch (index) {
 		case Data.PRICE:
@@ -236,15 +245,14 @@ public class Switcher {
 			break;
 		default:
 			Printer.print(Data.ERROR_MESSAGE);
-			exitProgramm();
+			switcherSorterAsc(apartment);
 			break;
 		}
 
 	}
 
 	public static void switcherSorterDesc(Apartment apartment) {
-		Printer.print("\nSelect value (type - descending): " + "\n1. Price" + "\n2. Weight" + "\n3. Power consumption"
-				+ "\n4. Device name" + "\n5. Back\n");
+		Printer.print(Data.SORTER_INITIALIZATION);
 		index = scanner.nextInt();
 		switch (index) {
 		case Data.PRICE:
@@ -272,7 +280,7 @@ public class Switcher {
 			break;
 		default:
 			Printer.print(Data.ERROR_MESSAGE);
-			exitProgramm();
+			switcherSorterDesc(apartment);
 			break;
 		}
 

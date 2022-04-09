@@ -75,11 +75,4 @@ public class DeviceCreator implements Data {
 		return getTypeDevice(type);
 	}
 
-	public static Apartment create() {
-		Apartment apartment = new Apartment();
-		// ...
-
-		return apartment;
-	}
-
 }
